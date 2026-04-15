@@ -69,12 +69,12 @@ const HeroEnvelope = ({ onOpen }) => {
 
       {/* Top Welcome Text */}
       <motion.div 
-        className="absolute top-[15%] w-full text-center px-4"
+        className="absolute top-[12%] sm:top-[15%] w-full text-center px-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: isOpen ? 0 : 1, y: 0 }}
         transition={{ duration: 1, delay: 0.2 }}
       >
-        <p className="font-serif text-[15px] sm:text-base font-medium tracking-widest text-gold italic drop-shadow-md">
+        <p className="font-serif text-[18px] sm:text-[22px] font-bold tracking-widest text-[#9A6D1C] italic drop-shadow-[0_2px_4px_rgba(0,0,0,0.15)] leading-relaxed">
           In the Name of Allah,<br className="sm:hidden" /> the Most Gracious, the Most Merciful
         </p>
       </motion.div>
