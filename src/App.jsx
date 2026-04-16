@@ -17,7 +17,7 @@ function App() {
   React.useEffect(() => {
     if (isOpened) {
       // WOW Party Popper Effect - Multi-stage
-      const end = Date.now() + (3 * 1000);
+      const end = Date.now() + (1.5 * 1000);
       const colors = ['#B68222', '#FAF6F0', '#A83B40', '#899E8F'];
 
       (function frame() {
