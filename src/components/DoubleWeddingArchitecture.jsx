@@ -15,30 +15,32 @@ const Rings = () => (
 const MandalaBackdrop = ({ scrollYProgress }) => {
   const rotation1 = useTransform(scrollYProgress, [0, 1], [0, 180]);
   const rotation2 = useTransform(scrollYProgress, [0, 1], [0, -180]);
-  const opacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 0.15]);
+  const opacity = useTransform(scrollYProgress, [0.1, 0.3], [0, 0.1]);
 
   return (
     <div className="absolute inset-0 pointer-events-none flex flex-col justify-between items-center overflow-hidden z-0">
       <motion.div 
-        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mt-[75vw] sm:-mt-[400px] rounded-full border-[1px] border-gold border-dashed flex items-center justify-center"
-        style={{ rotate: rotation1, opacity }}
+        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mt-[75vw] sm:-mt-[400px] rounded-full border border-gold/20 flex items-center justify-center"
+        style={{ rotate: rotation1, opacity, willChange: 'transform' }}
       >
-         <div className="w-[80%] h-[80%] rounded-full border border-gold/50 border-dotted" />
+         <div className="w-[85%] h-[85%] rounded-full border border-gold/10" />
       </motion.div>
       <motion.div 
-        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mb-[75vw] sm:-mb-[400px] rounded-full border-[1px] border-gold border-dashed flex items-center justify-center"
-        style={{ rotate: rotation2, opacity }}
+        className="w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mb-[75vw] sm:-mb-[400px] rounded-full border border-gold/20 flex items-center justify-center"
+        style={{ rotate: rotation2, opacity, willChange: 'transform' }}
       >
-         <div className="w-[80%] h-[80%] rounded-full border border-gold/50 border-dotted" />
+         <div className="w-[85%] h-[85%] rounded-full border border-gold/10" />
       </motion.div>
     </div>
   );
 };
 
+
 const OrnateSingleCard = ({ couple, eventType, date, time, highlight, venue, parentsInfo, pathDraw, photos }) => (
 
-  <div className="w-full h-full relative p-4 flex flex-col items-center z-10 paper-bg bg-paper shadow-2xl rounded-t-[140px] rounded-b-xl border-[4px] border-white/50 overflow-hidden">
-    <div className="absolute inset-0 rounded-t-[136px] rounded-b-lg border-[2px] border-gold/30 pointer-events-none"></div>
+  <div className="w-full h-full relative p-4 flex flex-col items-center z-10 paper-bg bg-paper shadow-xl rounded-t-[140px] rounded-b-xl border-[3px] border-white/40 overflow-hidden transform-gpu">
+    <div className="absolute inset-0 rounded-t-[136px] rounded-b-lg border border-gold/20 pointer-events-none"></div>
+
     
     <svg className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-t-[120px] rounded-b-md pointer-events-none" preserveAspectRatio="none">
       <motion.rect 

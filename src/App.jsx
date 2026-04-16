@@ -6,13 +6,47 @@ import VenueMaps from './components/VenueMaps';
 import ClosingMessage from './components/ClosingMessage';
 import MusicPlayer from './components/MusicPlayer';
 import FooterRSVP from './components/FooterRSVP';
+import confetti from 'canvas-confetti';
+
 
 
 
 function App() {
   const [isOpened, setIsOpened] = useState(false);
 
+  React.useEffect(() => {
+    if (isOpened) {
+      // WOW Party Popper Effect - Multi-stage
+      const end = Date.now() + (3 * 1000);
+      const colors = ['#B68222', '#FAF6F0', '#A83B40', '#899E8F'];
+
+      (function frame() {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0, y: 0.6 },
+          colors: colors,
+          zIndex: 1001
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1, y: 0.6 },
+          colors: colors,
+          zIndex: 1001
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+  }, [isOpened]);
+
   return (
+
     <div className="relative min-h-screen bg-envelope font-sans flex flex-col justify-center">
       {/* Noise Overlay */}
       <div className="noise-overlay pointer-events-none fixed inset-0 z-50"></div>
