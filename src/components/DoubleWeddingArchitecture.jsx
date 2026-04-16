@@ -50,14 +50,14 @@ const OrnateSingleCard = ({ couple, eventType, date, time, highlight, venue, par
       />
     </svg>
 
-    <div className="mt-8 z-10 w-full flex flex-col items-center">
+    <div className="mt-8 z-10 w-full flex flex-col items-center shrink-0">
       <Rings />
       <div className="mb-2">
         <span className="font-serif text-4xl text-gold italic drop-shadow-sm">﷽</span>
       </div>
     </div>
 
-    <div className="mt-6 flex flex-col items-center text-center px-4 z-10 w-full h-full">
+    <div className="mt-4 flex flex-col items-center text-center px-4 z-10 w-full h-full flex-grow">
       <h2 className="font-serif text-3xl sm:text-4xl text-textDark italic drop-shadow-sm leading-tight mb-2">
         {couple.split('&').map((text, i) => (
           <React.Fragment key={i}>
@@ -138,7 +138,7 @@ const DoubleWeddingArchitecture = () => {
   
   
     return (
-    <div ref={containerRef} className="relative h-[400vh] w-full pt-8">
+    <div ref={containerRef} className="relative h-[500vh] w-full pt-8">
       
       <div className="sticky top-0 h-[100vh] sm:h-screen w-full flex flex-col items-center justify-center overflow-hidden z-20 pointer-events-none">
         
