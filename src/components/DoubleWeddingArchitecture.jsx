@@ -130,9 +130,9 @@ const DoubleWeddingArchitecture = () => {
     const card1Y = useTransform(scrollYProgress, [0.05, 0.2, 0.45, 0.55], ["10%", "0%", "0%", "-10%"]);
   
     // PAGE 3: Card 2 - Rizwan & Nidha (Starts as Card 1 fades out)
-    const card2Opacity = useTransform(scrollYProgress, [0.45, 0.6, 0.9, 1.0], [0, 1, 1, 1]);
-    const card2Scale = useTransform(scrollYProgress, [0.45, 0.6], [0.9, 1]);
-    const card2Y = useTransform(scrollYProgress, [0.45, 0.6], ["10%", "0%"]);
+    const card2Opacity = useTransform(scrollYProgress, [0.45, 0.55, 0.8, 1.0], [0, 1, 1, 1]);
+    const card2Scale = useTransform(scrollYProgress, [0.45, 0.55], [0.9, 1]);
+    const card2Y = useTransform(scrollYProgress, [0.45, 0.55], ["10%", "0%"]);
   
     const pathDraw = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
   
