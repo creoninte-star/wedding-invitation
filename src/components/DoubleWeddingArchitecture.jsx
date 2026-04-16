@@ -95,59 +95,37 @@ const OrnateSingleCard = ({ couple, eventType, date, time, highlight, venue, par
 );
 
 const DoubleWeddingArchitecture = () => {
-  const containerRef = useRef(null);
-
-  const couple1Photos = [
-    "/Rafeel&Jumana photos/WhatsApp%20Image%202026-04-16%20at%209.31.24%20PM%20(1).jpeg",
-    "/Rafeel&Jumana photos/WhatsApp%20Image%202026-04-16%20at%209.31.24%20PM.jpeg"
-  ];
-
-  const couple2Photos = [
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.51%20PM.jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM%20(1).jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM%20(2).jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM.jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM%20(1).jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM%20(2).jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM.jpeg",
-    "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.54%20PM.jpeg"
-  ];
-
+    const couple1Photos = [
+      "/Rafeel&Jumana photos/WhatsApp%20Image%202026-04-16%20at%209.31.24%20PM%20(1).jpeg",
+      "/Rafeel&Jumana photos/WhatsApp%20Image%202026-04-16%20at%209.31.24%20PM.jpeg"
+    ];
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-    // PAGE 1: Book View (Start fading immediately to avoid "stuck" feeling)
-    const bookOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-    const bookScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.8]);
-    const bookY = useTransform(scrollYProgress, [0, 0.15], ["0%", "-5%"]);
-  
-    // PAGE 2: Card 1 - Rafeel & Jumana
-    const card1Opacity = useTransform(scrollYProgress, [0.05, 0.2, 0.45, 0.55], [0, 1, 1, 0]);
-    const card1Scale = useTransform(scrollYProgress, [0.05, 0.2, 0.45, 0.55], [0.9, 1, 1, 0.9]);
-    const card1Y = useTransform(scrollYProgress, [0.05, 0.2, 0.45, 0.55], ["10%", "0%", "0%", "-10%"]);
-  
-    // PAGE 3: Card 2 - Rizwan & Nidha (Starts as Card 1 fades out)
-    const card2Opacity = useTransform(scrollYProgress, [0.45, 0.55, 0.8, 1.0], [0, 1, 1, 1]);
-    const card2Scale = useTransform(scrollYProgress, [0.45, 0.55], [0.9, 1]);
-    const card2Y = useTransform(scrollYProgress, [0.45, 0.55], ["10%", "0%"]);
-  
-    const pathDraw = useTransform(scrollYProgress, [0.1, 0.3], [0, 1]);
-  
+    const couple2Photos = [
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.51%20PM.jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM%20(1).jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM%20(2).jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.52%20PM.jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM%20(1).jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM%20(2).jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.53%20PM.jpeg",
+      "/Rizwan&Nidha photos/WhatsApp%20Image%202026-04-16%20at%209.31.54%20PM.jpeg"
+    ];
   
     return (
-    <div ref={containerRef} className="relative h-[500vh] w-full pt-8">
-      
-      <div className="sticky top-0 h-[100vh] sm:h-screen w-full flex flex-col items-center justify-center overflow-hidden z-20 pointer-events-none">
+      <div className="w-full pt-8 pb-16 flex flex-col items-center gap-16 relative overflow-hidden">
         
-        <MandalaBackdrop scrollYProgress={scrollYProgress} />
-
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150vw] h-[150vw] sm:w-[800px] sm:h-[800px] -mt-[400px] rounded-full border border-gold/20 flex items-center justify-center opacity-10 pointer-events-none z-0">
+           <div className="w-[85%] h-[85%] rounded-full border border-gold/10" />
+        </div>
+  
         {/* --- PAGE 1: THE ENTRY SEQUENCE (CLEAN BOOK) --- */}
         <motion.div 
-          className="absolute inset-x-8 inset-y-20 flex paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded z-10 border border-[#e0d6c8]/50"
-          style={{ opacity: bookOpacity, scale: bookScale, y: bookY }}
+          className="relative w-[90%] max-w-2xl h-64 sm:h-80 flex paper-bg shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded z-10 border border-[#e0d6c8]/50 mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1 }}
         >
           {/* Left Panel */}
           <div className="flex-1 h-full border-r border-[#d8ccba] border-dashed flex items-center justify-center p-2 relative bg-paper shadow-[inset_-10px_0_15px_-10px_rgba(0,0,0,0.1)]">
@@ -162,7 +140,7 @@ const DoubleWeddingArchitecture = () => {
               Rizwan<br/><span className="text-sm not-italic">&</span><br/>Nidha
             </h3>
           </div>
-
+  
           <div className="absolute -bottom-12 left-0 right-0 flex justify-center opacity-70">
              <div className="flex flex-col items-center animate-bounce">
                 <span className="font-sans text-[8px] uppercase tracking-widest text-textDark/80">Scroll to view details</span>
@@ -170,17 +148,15 @@ const DoubleWeddingArchitecture = () => {
              </div>
           </div>
         </motion.div>
-
-
+  
+  
         {/* --- PAGE 2: CARD FOR COUPLE 1 --- */}
         <motion.div
-          className="absolute inset-x-4 inset-y-10 sm:inset-x-8 sm:inset-y-12 z-20 pointer-events-auto flex items-center justify-center"
-          style={{ 
-            opacity: card1Opacity, 
-            scale: card1Scale, 
-            y: card1Y,
-            pointerEvents: useTransform(scrollYProgress, v => v > 0.55 ? "none" : "auto") 
-          }}
+          className="relative w-[90%] max-w-sm h-[70vh] min-h-[600px] z-20 pointer-events-auto"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
            <OrnateSingleCard 
               couple="Rafeel & Jumana"
@@ -189,20 +165,18 @@ const DoubleWeddingArchitecture = () => {
               time="After Asar (4:00 PM onwards)"
               highlight="Bride Entry 5:30 - 6:00 PM"
               venue={<span>Zareena Manzil,<br/>Koothparamb</span>}
-              pathDraw={pathDraw}
+              pathDraw={1}
               photos={couple1Photos}
             />
         </motion.div>
-
+  
         {/* --- PAGE 3: CARD FOR COUPLE 2 --- */}
         <motion.div
-          className="absolute inset-x-4 inset-y-10 sm:inset-x-8 sm:inset-y-12 z-30 pointer-events-auto flex items-center justify-center"
-          style={{ 
-            opacity: card2Opacity, 
-            scale: card2Scale, 
-            y: card2Y,
-            pointerEvents: useTransform(scrollYProgress, v => v > 0.55 ? "auto" : "none")
-          }}
+          className="relative w-[90%] max-w-sm h-[70vh] min-h-[600px] z-30 pointer-events-auto"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
            <OrnateSingleCard 
               couple="Rizwan & Nidha"
@@ -210,14 +184,13 @@ const DoubleWeddingArchitecture = () => {
               date="May 7, 2026"
               time="Starting at 12:00 PM"
               venue={<span>Vajra Auditorium,<br/>Mooriyad Road</span>}
-              pathDraw={pathDraw}
+              pathDraw={1}
               photos={couple2Photos}
            />
         </motion.div>
-
+  
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 export default DoubleWeddingArchitecture;
