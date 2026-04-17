@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import confetti from 'canvas-confetti';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -66,9 +67,24 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
 
     setScratchCount(prev => {
       const next = prev + 1;
-      if (next > 25) { // Scratch threshold reached
+      if (next > 25 && !revealed) { // Scratch threshold reached
         setRevealed(true);
         onReveal();
+        
+        // Very minimal and elegant gold confetti celebration
+        const rect = canvasRef.current.getBoundingClientRect();
+        const xPos = (rect.left + rect.width / 2) / window.innerWidth;
+        const yPos = (rect.top + rect.height / 2) / window.innerHeight;
+        
+        confetti({
+          particleCount: 30,
+          spread: 45,
+          origin: { x: xPos, y: yPos },
+          colors: ['#D4AF37', '#eaddce', '#655743'],
+          disableForReducedMotion: true,
+          ticks: 150,
+          scalar: 0.6 // smaller particles for minimal look
+        });
       }
       return next;
     });
@@ -99,31 +115,6 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
       {/* The actual date underneath */}
       <div className="absolute inset-0 flex items-center justify-center bg-envelope/30 rounded border border-gold/20 pointer-events-none">
         <p className="font-sans text-[10px] font-bold uppercase tracking-widest text-textDark drop-shadow-sm">{dateString}</p>
-        
-        {/* Celebration Particles */}
-        <AnimatePresence>
-          {revealed && (
-            <>
-              {[...Array(12)].map((_, i) => {
-                const angle = (i * 30) * (Math.PI / 180);
-                return (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1.5 h-1.5 rounded-full bg-gold"
-                    initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
-                    animate={{ 
-                      opacity: 0, 
-                      scale: [0, 1.5, 0],
-                      x: Math.cos(angle) * 60, 
-                      y: Math.sin(angle) * 25 
-                    }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                  />
-                );
-              })}
-            </>
-          )}
-        </AnimatePresence>
       </div>
 
       {/* The Scratch Canvas */}
