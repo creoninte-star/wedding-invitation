@@ -95,10 +95,10 @@ const FooterRSVP = () => {
         <div className="absolute top-1/2 -ml-3 left-0 w-6 h-6 bg-[#F6EAEB] rounded-full -translate-y-1/2 border-r border-sage/20 z-10"></div>
         <div className="absolute top-1/2 -mr-3 right-0 w-6 h-6 bg-[#F6EAEB] rounded-full -translate-y-1/2 border-l border-sage/20 z-10"></div>
 
-        {/* Ticket Top - Destination */}
+        {/* Ticket Top - RSVP */}
         <div className="p-8 border-b-2 border-dashed border-sage/30 relative">
-          <h3 className="font-sans text-[10px] uppercase tracking-widest text-gold mb-1">Destination</h3>
-          <h2 className="font-serif text-3xl text-textDark mb-4">Veliya Velicham</h2>
+          <h3 className="font-sans text-[10px] uppercase tracking-widest text-gold mb-1">RSVP</h3>
+          <h2 className="font-serif text-3xl text-textDark mb-4">Count Me In!</h2>
           
         </div>
 
@@ -161,7 +161,7 @@ const FooterRSVP = () => {
                   disabled={isSubmitting}
                   className={`w-full mt-4 py-3 bg-textDark text-paper font-sans text-xs uppercase tracking-widest rounded shadow-md transition-colors duration-300 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gold'}`}
                 >
-                  {isSubmitting ? 'Confirming...' : 'Confirm RSVP'}
+                  {isSubmitting ? 'Saving...' : 'Save My Seat!'}
                 </button>
               </form>
             </>
