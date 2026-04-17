@@ -44,19 +44,22 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
   useEffect(() => {
     if (revealed) {
       onReveal();
+      
+      // The canvas is still in the DOM (but transparent), so we can get its position
       if (canvasRef.current) {
         const rect = canvasRef.current.getBoundingClientRect();
         const xPos = (rect.left + rect.width / 2) / window.innerWidth;
         const yPos = (rect.top + rect.height / 2) / window.innerHeight;
         
         confetti({
-          particleCount: 30,
-          spread: 45,
+          particleCount: 60, // Restored intensity
+          spread: 50,
           origin: { x: xPos, y: yPos },
           colors: ['#D4AF37', '#eaddce', '#655743'],
           disableForReducedMotion: true,
           ticks: 150,
-          scalar: 0.6
+          gravity: 1.2,
+          scalar: 0.7 
         });
       }
     }
@@ -115,19 +118,17 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
         <p className="font-sans text-[10px] font-bold uppercase tracking-widest text-textDark drop-shadow-sm">{dateString}</p>
       </div>
 
-      {!revealed && (
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full rounded shadow-sm touch-none transition-opacity duration-300"
-          onMouseDown={handleDown}
-          onMouseUp={handleUp}
-          onMouseLeave={handleUp}
-          onMouseMove={handleMove}
-          onTouchStart={handleDown}
-          onTouchEnd={handleUp}
-          onTouchMove={handleMove}
-        />
-      )}
+      <canvas
+        ref={canvasRef}
+        className={`absolute inset-0 w-full h-full rounded shadow-sm touch-none transition-opacity duration-700 ${revealed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        onMouseDown={handleDown}
+        onMouseUp={handleUp}
+        onMouseLeave={handleUp}
+        onMouseMove={handleMove}
+        onTouchStart={handleDown}
+        onTouchEnd={handleUp}
+        onTouchMove={handleMove}
+      />
     </motion.div>
   );
 };
