@@ -6,7 +6,6 @@ import VenueMaps from './components/VenueMaps';
 import ClosingMessage from './components/ClosingMessage';
 import MusicPlayer from './components/MusicPlayer';
 import FooterRSVP from './components/FooterRSVP';
-import MasterInvitation from './components/MasterInvitation';
 import confetti from 'canvas-confetti';
 
 
@@ -64,7 +63,6 @@ function App() {
 
         {/* The actual Invitation Content */}
         <div className={`relative z-10 min-h-screen transition-opacity duration-1000 ${isOpened ? 'opacity-100' : 'opacity-0'}`}>
-          <MasterInvitation />
           <DoubleWeddingArchitecture />
           
           <EventSections />

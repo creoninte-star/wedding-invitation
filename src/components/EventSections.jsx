@@ -91,10 +91,39 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
   };
 
   return (
-    <div className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair">
+    <motion.div 
+      className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair z-20"
+      animate={!revealed && !isScratching ? { x: [0, -3, 3, -3, 3, 0] } : { x: 0 }}
+      transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2.5 }}
+    >
       {/* The actual date underneath */}
-      <div className="absolute inset-0 flex items-center justify-center bg-envelope/30 rounded border border-gold/20">
+      <div className="absolute inset-0 flex items-center justify-center bg-envelope/30 rounded border border-gold/20 pointer-events-none">
         <p className="font-sans text-[10px] font-bold uppercase tracking-widest text-textDark drop-shadow-sm">{dateString}</p>
+        
+        {/* Celebration Particles */}
+        <AnimatePresence>
+          {revealed && (
+            <>
+              {[...Array(12)].map((_, i) => {
+                const angle = (i * 30) * (Math.PI / 180);
+                return (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1.5 h-1.5 rounded-full bg-gold"
+                    initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
+                    animate={{ 
+                      opacity: 0, 
+                      scale: [0, 1.5, 0],
+                      x: Math.cos(angle) * 60, 
+                      y: Math.sin(angle) * 25 
+                    }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                  />
+                );
+              })}
+            </>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* The Scratch Canvas */}
@@ -114,7 +143,7 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           />
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
