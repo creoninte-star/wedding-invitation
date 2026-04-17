@@ -50,14 +50,14 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
         const yPos = (rect.top + rect.height / 2) / window.innerHeight;
         
         confetti({
-          particleCount: 60,
-          spread: 50,
+          particleCount: 120,
+          spread: 80,
           origin: { x: xPos, y: yPos },
-          colors: ['#D4AF37', '#eaddce', '#655743'],
+          colors: ['#D4AF37', '#eaddce', '#655743', '#B68222'],
           disableForReducedMotion: true,
-          ticks: 150,
-          gravity: 1.2,
-          scalar: 0.7 
+          ticks: 200,
+          gravity: 1,
+          scalar: 1.1
         });
       }
     }
@@ -85,17 +85,17 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     setScratchCount(prev => {
       const next = prev + 1;
       
-      // Small popper effect during scratch
-      if (next % 3 === 0) {
+      // High intensity popper effect during scratch
+      if (next % 2 === 0) {
         confetti({
-          particleCount: 2,
+          particleCount: 6,
           angle: Math.random() * 360,
-          spread: 40,
+          spread: 60,
           origin: { x: clientX / window.innerWidth, y: clientY / window.innerHeight },
-          colors: ['#D4AF37', '#655743'],
-          gravity: 2,
-          scalar: 0.4,
-          ticks: 20
+          colors: ['#D4AF37', '#655743', '#B68222'],
+          gravity: 1.5,
+          scalar: 0.7,
+          ticks: 30
         });
       }
 
