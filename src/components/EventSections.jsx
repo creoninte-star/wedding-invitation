@@ -111,7 +111,11 @@ const ScratchCardDate = ({ dateString, onReveal, forceShake }) => {
       className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair z-20"
       animate={
         forceShake && !revealed
-          ? { x: [-8, 8, -6, 6, -3, 3, 0], transition: { duration: 0.6 } } 
+          ? { 
+              x: [-15, 15, -12, 12, -8, 8, -4, 4, 0],
+              y: [-3, 3, -3, 3, -2, 2, -1, 1, 0], 
+              transition: { duration: 0.6 } 
+            } 
           : (!revealed && !isScratching ? { x: [0, -2, 2, 0], y: [0, -1, 1, 0], transition: { duration: 0.4, repeat: Infinity, repeatDelay: 2.5 } } : { x: 0, y: 0 })
       }
     >
