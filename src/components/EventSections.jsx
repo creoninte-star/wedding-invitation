@@ -56,7 +56,8 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           colors: ['#D4AF37', '#eaddce', '#655743', '#B68222'],
           disableForReducedMotion: true,
           ticks: 200,
-          gravity: 1,
+          gravity: 0.8,
+          startVelocity: 30,
           scalar: 1.1
         });
       }
@@ -93,7 +94,8 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           spread: 60,
           origin: { x: clientX / window.innerWidth, y: clientY / window.innerHeight },
           colors: ['#D4AF37', '#655743', '#B68222'],
-          gravity: 1.5,
+          gravity: 1.2,
+          startVelocity: 15,
           scalar: 0.7,
           ticks: 30
         });
