@@ -109,7 +109,7 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
   return (
     <motion.div 
       className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair z-20"
-      animate={!revealed && !isScratching ? { x: [0, -3, 3, -3, 3, 0] } : { x: 0 }}
+      animate={!revealed && !isScratching ? { x: [0, -2, 2, -2, 2, 0], y: [0, -1, 1, -1, 1, 0] } : { x: 0, y: 0 }}
       transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2.5 }}
     >
       {/* The actual date underneath */}
