@@ -1,10 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, animate } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { Map } from 'lucide-react';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
+
+const DigitCounter = ({ value, revealed }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (revealed) {
+      const targetValue = parseInt(value) || 0;
+      const controls = animate(0, targetValue, {
+        duration: 1.2,
+        ease: "easeOut",
+        onUpdate: (latest) => setDisplayValue(Math.floor(latest))
+      });
+      return () => controls.stop();
+    } else {
+      setDisplayValue(0);
+    }
+  }, [revealed, value]);
+
+  return (
+    <motion.span 
+      className="font-serif text-[28px] text-gold mb-1 w-12 text-center"
+      animate={revealed ? { 
+        scale: [1, 1.2, 1], 
+        color: ['#655743', '#d4af37'],
+      } : {}}
+      transition={{ duration: 0.6 }}
+    >
+      {String(displayValue).padStart(2, '0')}
+    </motion.span>
+  );
 };
 
 const ScratchCardDate = ({ dateString, onReveal }) => {
@@ -205,8 +237,6 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
   const [hasScrolledPast, setHasScrolledPast] = useState(false);
   
   const calculateTimeLeft = () => {
-    if (!revealed) return { days: '00', hours: '00', minutes: '00', seconds: '00' };
-    
     const difference = +new Date(targetDateIso) - +new Date();
     if (difference <= 0) return { days: '00', hours: '00', minutes: '00', seconds: '00' };
 
@@ -221,13 +251,11 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    if (!revealed) return; 
-    
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
     return () => clearInterval(timer);
-  }, [revealed, targetDateIso]);
+  }, [targetDateIso]);
 
   // AUTO-SCROLL PULL-BACK LOGIC
   useEffect(() => {
@@ -298,17 +326,7 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 + i * 0.1 }}
             >
-              <motion.span 
-                className="font-serif text-[28px] text-gold mb-1 w-12 text-center"
-                animate={revealed ? { 
-                  scale: [1, 1.3, 1], 
-                  color: ['#655743', '#d4af37'],
-                  rotateZ: [0, 5, 0]
-                } : {}}
-                transition={{ duration: 0.6 }}
-              >
-                {timeLeft[interval]}
-              </motion.span>
+              <DigitCounter value={timeLeft[interval]} revealed={revealed} />
               <span className="font-sans text-[8px] uppercase tracking-[0.2em] text-textDark/50">
                 {interval}
               </span>
@@ -341,14 +359,16 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2 }}
-            className="pt-4"
+            className="pt-6"
           >
             <a 
               href={locationLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-gold/40 bg-white/50 text-gold font-serif text-xs tracking-widest hover:bg-gold hover:text-white transition-all duration-300 shadow-sm uppercase italic"
+              className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-gold/40 bg-white shadow-lg text-gold font-serif text-[13px] tracking-widest hover:bg-gold hover:text-white transition-all duration-500 uppercase italic font-bold"
+              style={{ boxShadow: '0 8px 15px rgba(182, 130, 34, 0.1)' }}
             >
+              <Map size={16} className="text-gold group-hover:text-white" />
               View Location
             </a>
           </motion.div>

@@ -38,9 +38,27 @@ const MandalaBackdrop = ({ scrollYProgress }) => {
 
 const OrnateSingleCard = ({ pathDraw }) => (
   <div className="w-full h-full relative p-6 flex flex-col items-center z-10 paper-bg bg-paper shadow-2xl rounded-t-[160px] rounded-b-xl border-[3px] border-white/40 overflow-hidden transform-gpu">
-    <div className="absolute inset-0 rounded-t-[156px] rounded-b-lg border border-gold/20 pointer-events-none"></div>
+    {/* Ghosted Background Watermarks */}
+    <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.08] grayscale">
+       <div className="absolute top-0 left-0 w-full h-1/2 overflow-hidden">
+          <img 
+            src="/refeel and jumana.jpeg" 
+            alt="" 
+            className="w-full h-full object-cover scale-110 blur-[1px]" 
+          />
+       </div>
+       <div className="absolute bottom-0 left-0 w-full h-1/2 overflow-hidden">
+          <img 
+            src="/rizwan and nidha.jpeg" 
+            alt="" 
+            className="w-full h-full object-cover scale-110 blur-[1px]" 
+          />
+       </div>
+    </div>
 
-    <svg className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-t-[140px] rounded-b-md pointer-events-none" preserveAspectRatio="none">
+    <div className="absolute inset-0 rounded-t-[156px] rounded-b-lg border border-gold/20 pointer-events-none z-10"></div>
+
+    <svg className="absolute inset-2 w-[calc(100%-16px)] h-[calc(100%-16px)] rounded-t-[140px] rounded-b-md pointer-events-none z-10" preserveAspectRatio="none">
       <motion.rect 
         width="100%" height="100%" rx="8" 
         stroke="rgba(212,175,55,0.4)" strokeWidth="1.5" fill="none"
@@ -48,14 +66,14 @@ const OrnateSingleCard = ({ pathDraw }) => (
       />
     </svg>
 
-    <div className="mt-12 z-10 w-full flex flex-col items-center shrink-0">
+    <div className="mt-12 z-20 w-full flex flex-col items-center shrink-0">
       <Rings />
       <div className="mb-4">
         <span className="font-serif text-5xl text-gold italic drop-shadow-sm">﷽</span>
       </div>
     </div>
 
-    <div className="mt-6 flex flex-col items-center text-center px-4 z-10 w-full h-full flex-grow">
+    <div className="mt-6 flex flex-col items-center text-center px-4 z-20 w-full h-full flex-grow">
       <div className="space-y-6 mb-8">
         <div className="space-y-1">
           <h2 className="font-serif text-3xl sm:text-4xl text-textDark italic drop-shadow-sm leading-tight">
