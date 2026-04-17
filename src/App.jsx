@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import HeroEnvelope from './components/HeroEnvelope';
 import DoubleWeddingArchitecture from './components/DoubleWeddingArchitecture';
@@ -13,10 +13,11 @@ import confetti from 'canvas-confetti';
 
 
 function App() {
+  console.log("Wedding App Initializing...");
   const [isOpened, setIsOpened] = useState(false);
   const [allRevealed, setAllRevealed] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isOpened) {
       // WOW Party Popper Effect - Multi-stage
       const end = Date.now() + (1.5 * 1000);

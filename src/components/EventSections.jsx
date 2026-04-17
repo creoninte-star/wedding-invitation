@@ -50,13 +50,14 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
         const yPos = (rect.top + rect.height / 2) / window.innerHeight;
         
         confetti({
-          particleCount: 30,
-          spread: 45,
+          particleCount: 60,
+          spread: 50,
           origin: { x: xPos, y: yPos },
           colors: ['#D4AF37', '#eaddce', '#655743'],
           disableForReducedMotion: true,
           ticks: 150,
-          scalar: 0.6
+          gravity: 1.2,
+          scalar: 0.7 
         });
       }
     }
