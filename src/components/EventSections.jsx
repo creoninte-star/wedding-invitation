@@ -199,7 +199,7 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
   );
 };
 
-const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, onReveal }) => {
+const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, locationLink, onReveal }) => {
   const [revealed, setRevealed] = useState(false);
   const cardRef = useRef(null);
   const [hasScrolledPast, setHasScrolledPast] = useState(false);
@@ -239,12 +239,11 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
       const rect = cardRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       
-      // If the card is almost entirely scrolled out of view (scrolling down past it)
       if (rect.bottom < viewportHeight * 0.4 && !hasScrolledPast) {
         setHasScrolledPast(true);
         setTimeout(() => {
           cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setHasScrolledPast(false); // Reset for next time if they do it again
+          setHasScrolledPast(false); 
         }, 800);
       }
     };
@@ -282,7 +281,6 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
           transition={{ delay: 0.4, duration: 0.8 }}
         />
         
-        {/* Date Box (Scratchable) */}
         <ScratchCardDate 
           dateString={dateString} 
           onReveal={() => {
@@ -291,7 +289,6 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
           }} 
         />
         
-        {/* Countdown - Always visible, but zeros until scratched */}
         <div className="flex justify-center gap-4 my-8">
           {['days', 'hours', 'minutes', 'seconds'].map((interval, i) => (
             <motion.div 
@@ -319,18 +316,13 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
           ))}
         </div>
 
-        {/* Details - Always visible as requested */}
         <div className="space-y-6 mt-4">
-          <motion.div
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             transition={{ delay: 0.8 }}
-          >
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.8 }}>
             <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Time</h3>
             <p className="font-serif text-base text-textDark/80">{time}</p>
             {highlight && (
               <motion.p 
-                className="font-serif text-xs italic text-gold mt-1 drop-shadow-sm"
+                className="font-serif text-xs italic text-gold mt-1"
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ repeat: Infinity, duration: 2 }}
               >
@@ -339,20 +331,26 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
             )}
           </motion.div>
 
-          <motion.div 
-            className="w-8 h-px bg-[#899E8F]/30 mx-auto"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ delay: 0.9 }}
-          />
-
-          <motion.div
-             initial={{ opacity: 0 }}
-             whileInView={{ opacity: 1 }}
-             transition={{ delay: 1 }}
-          >
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 1 }}>
             <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
             <p className="font-serif text-base text-textDark/80 leading-relaxed">{venue}</p>
+          </motion.div>
+
+          {/* Location Tab (Button) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2 }}
+            className="pt-4"
+          >
+            <a 
+              href={locationLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-gold/40 bg-white/50 text-gold font-serif text-xs tracking-widest hover:bg-gold hover:text-white transition-all duration-300 shadow-sm uppercase italic"
+            >
+              View Location
+            </a>
           </motion.div>
         </div>
       </motion.div>
@@ -381,6 +379,7 @@ const EventSections = ({ onAllRevealed }) => {
         time="After Asar (4:00 PM onwards)"
         highlight="Bride Entry: 5:30 PM - 6:00 PM"
         venue="Zareena Manzil, Koothparamba"
+        locationLink="https://maps.app.goo.gl/NvpiSgrVxRf71aom8?g_st=aw"
         onReveal={handleReveal}
       />
       <EventCard 
@@ -390,6 +389,7 @@ const EventSections = ({ onAllRevealed }) => {
         time="Starting at 12:00 PM"
         highlight={null}
         venue="Vajra Auditorium, Mooriyad Road"
+        locationLink="https://www.google.com/maps/search/Vajra+Auditorium+Mooriyad+Road+Koothuparamba"
         onReveal={handleReveal}
       />
 
