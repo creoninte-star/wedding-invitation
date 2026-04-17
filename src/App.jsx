@@ -12,6 +12,31 @@ import confetti from 'canvas-confetti';
 
 
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: '20px', color: '#A83B40', textAlign: 'center', background: '#FAF6F0', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <h1 style={{ fontFamily: 'serif' }}>Something went wrong.</h1>
+          <p style={{ fontFamily: 'sans-serif', fontSize: '12px' }}>{this.state.error?.message}</p>
+          <button onClick={() => window.location.reload()} style={{ padding: '10px 20px', background: '#B68222', color: 'white', border: 'none', borderRadius: '5px', marginTop: '20px' }}>Reload Page</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function App() {
   console.log("Wedding App Initializing...");
   const [isOpened, setIsOpened] = useState(false);
@@ -58,7 +83,7 @@ function App() {
       <div className="max-w-md w-full mx-auto min-h-screen relative shadow-2xl bg-paper">
         
         {/* Music Control - stays on top after opening */}
-        {/* <MusicPlayer isOpened={isOpened} /> */}
+        <MusicPlayer isOpened={isOpened} />
         
         {/* Envelope Covers everything initially */}
 
@@ -89,4 +114,10 @@ function App() {
   );
 }
 
-export default App;
+export default function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+}
