@@ -111,8 +111,8 @@ const ScratchCardDate = ({ dateString, onReveal, forceShake }) => {
       className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair z-20"
       animate={
         forceShake && !revealed
-          ? { x: [-10, 10, -10, 10, -5, 5, 0], transition: { duration: 0.6 } } 
-          : (!revealed && !isScratching ? { x: [0, -2, 2, -2, 2, 0], y: [0, -1, 1, -1, 1, 0], transition: { duration: 0.5, repeat: Infinity, repeatDelay: 2.5 } } : { x: 0, y: 0 })
+          ? { x: [-8, 8, -6, 6, -3, 3, 0], transition: { duration: 0.6 } } 
+          : (!revealed && !isScratching ? { x: [0, -2, 2, 0], y: [0, -1, 1, 0], transition: { duration: 0.4, repeat: Infinity, repeatDelay: 2.5 } } : { x: 0, y: 0 })
       }
     >
       {/* The actual date underneath */}
@@ -239,6 +239,7 @@ const EventSections = () => {
   const [forceShake, setForceShake] = useState(false);
   const containerRef = useRef(null);
   const sentinelRef = useRef(null);
+  const isScrollingRef = useRef(false);
 
   useEffect(() => {
     // Stop observing once both are revealed
@@ -247,6 +248,9 @@ const EventSections = () => {
     const observer = new IntersectionObserver((entries) => {
       // If the sentinel triggers, it means they scrolled past the EventSections
       if (entries[0].isIntersecting && revealedCount < 2) {
+        if (isScrollingRef.current) return;
+        isScrollingRef.current = true;
+
         // Enforce scrolling back
         if (containerRef.current) {
           const topPos = containerRef.current.getBoundingClientRect().top + window.scrollY;
@@ -258,7 +262,10 @@ const EventSections = () => {
         
         // Trigger aggressive shake on the unscratched cards
         setForceShake(true);
-        setTimeout(() => setForceShake(false), 800);
+        setTimeout(() => {
+          setForceShake(false);
+          isScrollingRef.current = false;
+        }, 1500); // generous timeout prevents erratic double bounces
       }
     }, { threshold: 0.1 });
 
