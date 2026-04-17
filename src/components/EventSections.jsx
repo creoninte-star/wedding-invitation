@@ -7,7 +7,7 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
-const ScratchCardDate = ({ dateString, onReveal, forceShake }) => {
+const ScratchCardDate = ({ dateString, onReveal }) => {
   const canvasRef = useRef(null);
   const [isScratching, setIsScratching] = useState(false);
   const [revealed, setRevealed] = useState(false);
@@ -109,15 +109,8 @@ const ScratchCardDate = ({ dateString, onReveal, forceShake }) => {
   return (
     <motion.div 
       className="relative w-48 h-8 mx-auto my-2 group cursor-crosshair z-20"
-      animate={
-        forceShake && !revealed
-          ? { 
-              x: [-15, 15, -12, 12, -8, 8, -4, 4, 0],
-              y: [-3, 3, -3, 3, -2, 2, -1, 1, 0], 
-              transition: { duration: 0.6 } 
-            } 
-          : (!revealed && !isScratching ? { x: [0, -2, 2, 0], y: [0, -1, 1, 0], transition: { duration: 0.4, repeat: Infinity, repeatDelay: 2.5 } } : { x: 0, y: 0 })
-      }
+      animate={!revealed && !isScratching ? { x: [0, -2, 2, 0], y: [0, -1, 1, 0] } : { x: 0, y: 0 }}
+      transition={{ duration: 0.4, repeat: Infinity, repeatDelay: 2.5 }}
     >
       {/* The actual date underneath */}
       <div className="absolute inset-0 flex items-center justify-center bg-envelope/30 rounded border border-gold/20 pointer-events-none">
@@ -145,7 +138,7 @@ const ScratchCardDate = ({ dateString, onReveal, forceShake }) => {
   );
 };
 
-const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, onReveal, forceShake }) => {
+const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, onReveal }) => {
   const [revealed, setRevealed] = useState(false);
   
   const calculateTimeLeft = () => {
@@ -198,7 +191,6 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
             setRevealed(true);
             if (onReveal) onReveal();
           }} 
-          forceShake={forceShake}
         />
         
         {/* Minimalist Countdown */}
@@ -240,10 +232,7 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, o
 
 const EventSections = ({ onAllRevealed }) => {
   const [revealedCount, setRevealedCount] = useState(0);
-  const [forceShake, setForceShake] = useState(false);
   const containerRef = useRef(null);
-  const sentinelRef = useRef(null);
-  const isScrollingRef = useRef(false);
 
   useEffect(() => {
     if (revealedCount >= 2 && onAllRevealed) {
@@ -251,66 +240,28 @@ const EventSections = ({ onAllRevealed }) => {
     }
   }, [revealedCount, onAllRevealed]);
 
-  useEffect(() => {
-    // Stop observing once both are revealed
-    if (revealedCount >= 2) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      // If the sentinel triggers, it means they scrolled past the EventSections
-      if (entries[0].isIntersecting && revealedCount < 2) {
-        if (isScrollingRef.current) return;
-        isScrollingRef.current = true;
-
-        // Enforce scrolling back
-        if (containerRef.current) {
-          const topPos = containerRef.current.getBoundingClientRect().top + window.scrollY;
-          window.scrollTo({
-            top: topPos - 40,
-            behavior: 'smooth'
-          });
-        }
-        
-        // Trigger aggressive shake on the unscratched cards
-        setForceShake(true);
-        setTimeout(() => {
-          setForceShake(false);
-          isScrollingRef.current = false;
-        }, 1500); 
-      }
-    }, { threshold: 0.1 });
-
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
-    }
-    return () => observer.disconnect();
-  }, [revealedCount]);
-
   const handleReveal = () => setRevealedCount(prev => prev + 1);
 
   return (
-    <>
-      <div className="pb-8 flex flex-col items-center" ref={containerRef}>
-        <EventCard 
-          title="Nikkah Ceremony"
-          dateString="May 6, 2026"
-          targetDateIso="2026-05-06T16:00:00"
-          time="After Asar (4:00 PM onwards)"
-          highlight="Bride Entry: 5:30 PM - 6:00 PM"
-          venue="Zareena Manzil, Koothparamba"
-          onReveal={handleReveal}
-          forceShake={forceShake}
-        />
-        <EventCard 
-          title="Marriage Function"
-          dateString="May 7, 2026"
-          targetDateIso="2026-05-07T12:00:00"
-          time="Starting at 12:00 PM"
-          highlight={null}
-          venue="Vajra Auditorium, Mooriyad Road"
-          onReveal={handleReveal}
-          forceShake={forceShake}
-        />
-      </div>
+    <div className="pb-16 flex flex-col items-center" ref={containerRef}>
+      <EventCard 
+        title="Nikkah Ceremony"
+        dateString="May 6, 2026"
+        targetDateIso="2026-05-06T16:00:00"
+        time="After Asar (4:00 PM onwards)"
+        highlight="Bride Entry: 5:30 PM - 6:00 PM"
+        venue="Zareena Manzil, Koothparamba"
+        onReveal={handleReveal}
+      />
+      <EventCard 
+        title="Marriage Function"
+        dateString="May 7, 2026"
+        targetDateIso="2026-05-07T12:00:00"
+        time="Starting at 12:00 PM"
+        highlight={null}
+        venue="Vajra Auditorium, Mooriyad Road"
+        onReveal={handleReveal}
+      />
 
       <AnimatePresence>
         {revealedCount < 2 && (
@@ -318,7 +269,7 @@ const EventSections = ({ onAllRevealed }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.6 }}
             exit={{ opacity: 0 }}
-            className="text-center pb-20"
+            className="text-center pt-8"
           >
             <p className="font-sans text-[9px] uppercase tracking-[0.2em] text-gold animate-pulse">
               Scratch both dates to unlock details
@@ -326,10 +277,7 @@ const EventSections = ({ onAllRevealed }) => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Invisible element to detect scroll-past */}
-      <div ref={sentinelRef} className="w-full h-20 pointer-events-none opacity-0"></div>
-    </>
+    </div>
   );
 };
 
