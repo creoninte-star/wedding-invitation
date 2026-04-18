@@ -505,6 +505,7 @@ const EventSections = ({ onAllRevealed }) => {
               <p className="font-serif text-xs text-gold font-bold italic tracking-wide mb-1">Dhuʻl-Qiʻdah 19</p>
               <p className="font-serif text-lg text-textDark font-bold">Wednesday, May 6</p>
               <CountdownDisplay targetDateIso="2026-05-06T16:00:00" revealed={revealed} />
+              <p className="font-serif text-sm text-textDark/80">4:00 PM onwards</p>
               <p className="font-sans text-[10px] text-gold font-bold uppercase tracking-[0.2em] mt-2 underline decoration-gold/30 underline-offset-4">After Asar</p>
             </div>
 
