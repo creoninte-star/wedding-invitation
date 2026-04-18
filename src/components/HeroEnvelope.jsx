@@ -85,11 +85,11 @@ const HeroEnvelope = ({ onOpen }) => {
         <AnimatePresence>
           {!isOpen && (
             <>
-              {/* Jerry - Now on the Left, Inverted */}
+              {/* Jerry - Deep Left/Bottom as per Dot */}
               <motion.img 
                 src="/jerry.png"
                 alt="Jerry"
-                className="absolute top-[35%] -left-8 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
+                className="absolute top-[65%] -left-16 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
                 initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -10 }}
                 animate={{ 
                   opacity: 1, 
@@ -105,16 +105,16 @@ const HeroEnvelope = ({ onOpen }) => {
                 }}
               />
 
-              {/* Tom - Now on the Right */}
+              {/* Tom - Mid Right as per Dot */}
               <motion.img 
                 src="/tom.png"
                 alt="Tom"
-                className="absolute top-[45%] -right-8 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
+                className="absolute top-[55%] -right-4 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
                 initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
                 animate={{ 
                   opacity: 1, 
                   scale: 1, 
-                  rotate: -5,
+                  rotate: -25,
                   y: [0, -15, 0]
                 }}
                 exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
