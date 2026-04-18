@@ -85,11 +85,11 @@ const HeroEnvelope = ({ onOpen }) => {
         <AnimatePresence>
           {!isOpen && (
             <>
-              {/* Jerry - Deep Left/Bottom as per Dot */}
+              {/* Jerry - Now at the final bottom-left dot position */}
               <motion.img 
                 src="/jerry.png"
                 alt="Jerry"
-                className="absolute top-[65%] -left-16 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
+                className="absolute bottom-2 left-6 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
                 initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -10 }}
                 animate={{ 
                   opacity: 1, 
