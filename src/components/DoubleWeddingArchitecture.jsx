@@ -82,32 +82,8 @@ const OrnateSingleCard = ({ pathDraw }) => (
         <div className="w-16 h-px bg-gold/30 mx-auto mt-2"></div>
       </motion.div>
 
-      <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-sage mb-6 font-bold">Together with their families</p>
-      
-      {/* Parents Section - Prominent Hierarchy */}
-      <div className="space-y-6 mb-10 w-full">
-         <div className="flex flex-col items-center">
-            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. & Mrs. Rafeek & Sareena</h3>
-            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Grooms' Parents)</p>
-         </div>
-
-         <div className="flex flex-col items-center">
-            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. & Mrs. Sulaiman & Minsiya</h3>
-            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Nidha's Parents)</p>
-         </div>
-
-         <div className="flex flex-col items-center">
-            <h3 className="font-serif text-lg text-textDark leading-tight">
-               Mr. & Mrs. <span className="italic">Late</span> Rasak & Najma
-            </h3>
-            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Jumana's Parents)</p>
-         </div>
-      </div>
-
-      <div className="w-full h-px bg-gold/10 mb-8 max-w-[200px]"></div>
-
       {/* Main Couple Names */}
-      <div className="flex items-center justify-center gap-4 w-full px-2 mb-10">
+      <div className="flex items-center justify-center gap-4 w-full px-2 mb-8 mt-4">
         <div className="flex-1 text-center">
           <h2 className="font-serif text-2xl sm:text-4xl text-textDark italic leading-tight drop-shadow-sm">
             Rafeel
@@ -132,6 +108,31 @@ const OrnateSingleCard = ({ pathDraw }) => (
           </h2>
         </div>
       </div>
+
+      <p className="font-sans text-[10px] uppercase tracking-[0.3em] text-sage mb-6 font-bold">Together with their families</p>
+      
+      {/* Parents Section - Prominent Hierarchy */}
+      <div className="space-y-6 mb-10 w-full">
+         <div className="flex flex-col items-center">
+            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. & Mrs. Rafeek & Sareena</h3>
+            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Grooms' Parents)</p>
+         </div>
+
+         <div className="flex flex-col items-center">
+            <h3 className="font-serif text-lg text-textDark leading-tight">Mr. & Mrs. Sulaiman & Minsiya</h3>
+            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Nidha's Parents)</p>
+         </div>
+
+         <div className="flex flex-col items-center">
+            <h3 className="font-serif text-lg text-textDark leading-tight">
+               Mr. & Mrs. <span className="italic">Late</span> Rasak & Najma
+            </h3>
+            <p className="font-sans text-[8px] uppercase tracking-widest text-gold font-bold">(Jumana's Parents)</p>
+         </div>
+      </div>
+
+      <div className="w-full h-px bg-gold/10 mb-8 max-w-[200px]"></div>
+
 
       <motion.p 
         className="font-sans text-[10px] uppercase tracking-[0.25em] text-sage font-bold px-6 leading-relaxed"
