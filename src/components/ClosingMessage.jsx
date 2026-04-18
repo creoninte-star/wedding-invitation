@@ -50,6 +50,16 @@ const ClosingMessage = () => {
         <p className="font-sans text-[8px] sm:text-[9px] uppercase tracking-[0.4em] text-sage font-bold mt-4">
           The Families
         </p>
+        <p className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-textDark/60 mt-3 font-medium">
+          Raizy, Rafsi, Rasna & Families
+        </p>
+
+        {/* Attribution */}
+        <div className="mt-20 pb-4">
+          <p className="font-sans text-[9px] tracking-[0.2em] uppercase text-textDark/40">
+            Made With ❤️ By <a href="https://wa.me/message/6ZQ3JI2ZRT33C1" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold/80 transition-colors duration-300 font-bold">Creon</a>
+          </p>
+        </div>
 
       </div>
     </motion.section>
