@@ -434,29 +434,46 @@ const EventSections = ({ onAllRevealed }) => {
     }
   }, [revealed, onAllRevealed]);
 
-  // Pull-back logic - smoother and more 'intense' snap
+  // Highly optimized Pull-back logic for Mobile
   useEffect(() => {
     if (revealed) return;
+
+    let lastScrollY = window.scrollY;
+    let isMovingValue = false;
+
     const handleScroll = () => {
-      if (!cardRef.current) return;
+      if (!cardRef.current || revealed || isMovingValue) return;
+
       const rect = cardRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
+      const currentScrollY = window.scrollY;
       
-      // If the card is being scrolled away too fast while unscratched
-      if (rect.bottom < viewportHeight * 0.3 && !hasScrolledPast) {
+      // If we are scrolling DOWN and the card is leaving the top of the viewport
+      // OR if we are scrolling UP and the card is leaving the bottom
+      const isScrolledPastBottom = rect.bottom < viewportHeight * 0.35;
+      
+      if (isScrolledPastBottom && !hasScrolledPast && currentScrollY > lastScrollY) {
         setHasScrolledPast(true);
-        // Faster, smoother snap back to center
+        isMovingValue = true;
+
+        // Smooth Physics-based scroll back to center
+        const targetScroll = cardRef.current.offsetTop - (viewportHeight / 2) + (rect.height / 2);
+        
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth'
+        });
+
+        // Reset state after transition
         setTimeout(() => {
-          if (!revealed) {
-            window.scrollTo({
-              top: cardRef.current.offsetTop - (viewportHeight / 2) + (rect.height / 2),
-              behavior: 'smooth'
-            });
-          }
-          setHasScrolledPast(false); 
-        }, 600);
+          setHasScrolledPast(false);
+          isMovingValue = false;
+        }, 800);
       }
+      
+      lastScrollY = currentScrollY;
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [revealed, hasScrolledPast]);
