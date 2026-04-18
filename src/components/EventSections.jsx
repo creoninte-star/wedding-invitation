@@ -64,31 +64,43 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
     
     // Premium Metallic Gold Gradient for Scratch Cover
     const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-    gradient.addColorStop(0, '#c5a059');
-    gradient.addColorStop(0.2, '#f1e1a6');
-    gradient.addColorStop(0.5, '#d4af37');
-    gradient.addColorStop(0.8, '#f1e1a6');
-    gradient.addColorStop(1, '#a67c00');
+    gradient.addColorStop(0, '#B8860B');
+    gradient.addColorStop(0.3, '#FFD700');
+    gradient.addColorStop(0.5, '#F1E1A6');
+    gradient.addColorStop(0.7, '#DAA520');
+    gradient.addColorStop(1, '#8B7500');
     
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, rect.width, rect.height);
     
-    // Add subtle texture or pattern to the scratch card
-    ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+    // Ornate Texture Pattern
+    ctx.globalAlpha = 0.15;
+    ctx.strokeStyle = '#000';
     ctx.lineWidth = 0.5;
-    for (let i = 0; i < rect.width; i += 4) {
+    for (let i = 0; i < rect.width; i += 10) {
       ctx.beginPath();
       ctx.moveTo(i, 0);
-      ctx.lineTo(i, rect.height);
+      ctx.lineTo(i + 10, rect.height);
       ctx.stroke();
     }
+    ctx.globalAlpha = 1.0;
 
+    // Stylish Text on Foil
     ctx.fillStyle = '#655743';
-    ctx.font = 'bold 10px Montserrat';
+    ctx.font = 'bold 11px Montserrat';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.letterSpacing = '2px';
+    ctx.letterSpacing = '3px';
     ctx.fillText('SCRATCH TO REVEAL', rect.width / 2, rect.height / 2);
+
+    // Subtle Shine Line
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, rect.height);
+    ctx.lineTo(rect.width, 0);
+    ctx.stroke();
+
   }, [revealed]);
 
   useEffect(() => {
@@ -99,9 +111,6 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
         const xPos = (rect.left + rect.width / 2) / window.innerWidth;
         const yPos = (rect.top + rect.height / 2) / window.innerHeight;
         
-        // --- MASSIVE MULTI-STAGE POPPER CELEBRATION ---
-        
-        // Stage 1: Central Explosion
         confetti({
           particleCount: 600,
           spread: 160,
@@ -114,12 +123,11 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           ticks: 400
         });
 
-        // Stage 2: Staggered Side Blasts
         const blasts = [
           { x: 0.2, y: yPos + 0.1, delay: 150, angle: 60 },
           { x: 0.8, y: yPos + 0.1, delay: 250, angle: 120 },
           { x: 0.5, y: yPos - 0.2, delay: 400, angle: 90 },
-          { x: xPos, y: yPos, delay: 600, angle: 90, spread: 360 } // Final center starburst
+          { x: xPos, y: yPos, delay: 600, angle: 90, spread: 360 }
         ];
 
         blasts.forEach(blast => {
@@ -142,14 +150,11 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
 
   const scratch = (e) => {
     if (revealed || !canvasRef.current) return;
-    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
-    
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
@@ -160,8 +165,6 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
 
     setScratchCount(prev => {
       const next = prev + 1;
-      
-      // Energetic mini-pops during scratching
       if (next % 3 === 0) {
         confetti({
           particleCount: 15,
@@ -174,62 +177,59 @@ const ScratchCardDate = ({ dateString, onReveal }) => {
           ticks: 50
         });
       }
-
-      if (next > 22 && !revealed) { 
-        setRevealed(true);
-      }
+      if (next > 22 && !revealed) setRevealed(true);
       return next;
     });
   };
 
-  const handleDown = (e) => {
-    setIsScratching(true);
-    scratch(e);
-  };
-  
+  const handleDown = e => { setIsScratching(true); scratch(e); };
   const handleUp = () => setIsScratching(false);
-  
-  const handleMove = (e) => {
-    if (!isScratching) return;
-    if (e.cancelable) e.preventDefault();
-    scratch(e);
-  };
-
-  // Intense shake animation for the unscratched card
-  const shakeAnimation = {
-    x: [0, -4, 4, -4, 4, 0],
-    y: [0, -1, 1, -1, 1, 0],
-    rotate: [0, -1, 1, -1, 1, 0],
-    transition: {
-      duration: 0.3,
-      repeat: Infinity,
-      repeatDelay: 2
-    }
-  };
+  const handleMove = e => { if (isScratching) { if (e.cancelable) e.preventDefault(); scratch(e); } };
 
   return (
-    <div className="relative w-64 h-14 mx-auto my-6 z-20" ref={containerRef}>
-      {/* Background Frame (Matching Screenshot) */}
-      <div className="absolute inset-0 bg-white/40 rounded border-[1.5px] border-gold/40 flex items-center justify-center p-1">
-         <div className="w-full h-full border border-gold/20 rounded flex items-center justify-center bg-[#FDFBF7] shadow-inner">
-            <p className="font-serif text-[15px] tracking-[0.2em] text-textDark font-bold uppercase">{dateString}</p>
-         </div>
+    <div className="relative w-72 mx-auto my-8 group" ref={containerRef}>
+      {/* Ornate Laser-Cut Border Frame */}
+      <div className="absolute -inset-2 border-2 border-gold/40 rounded-lg p-1">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-4 h-4 border-2 border-gold/40 rotate-45 bg-paper"></div>
       </div>
+      
+      <div className="relative min-h-[56px] bg-white rounded border-[1.5px] border-gold/30 flex items-center justify-center p-1.5 shadow-xl overflow-hidden">
+         {/* Inner Bezel */}
+         <div className="absolute inset-0 border-[0.5px] border-black/5 rounded"></div>
+         
+         <div className="w-full h-full border border-gold/10 rounded flex items-center justify-center bg-[#FDFBF7] shadow-inner py-3">
+            <p className="font-serif text-[16px] tracking-[0.2em] text-textDark font-bold uppercase">{dateString}</p>
+         </div>
 
-      {!revealed && (
-        <motion.canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full rounded shadow-md touch-none cursor-crosshair z-30"
-          animate={shakeAnimation}
-          onMouseDown={handleDown}
-          onMouseUp={handleUp}
-          onMouseLeave={handleUp}
-          onMouseMove={handleMove}
-          onTouchStart={handleDown}
-          onTouchEnd={handleUp}
-          onTouchMove={handleMove}
-        />
-      )}
+         {!revealed && (
+          <motion.div 
+            className="absolute inset-0 z-30 overflow-hidden"
+            animate={{ 
+              x: [0, -2, 2, -2, 2, 0],
+              transition: { duration: 0.4, repeat: Infinity, repeatDelay: 3 }
+            }}
+          >
+             <motion.canvas
+              ref={canvasRef}
+              className="w-full h-full touch-none cursor-crosshair"
+              onMouseDown={handleDown}
+              onMouseUp={handleUp}
+              onMouseLeave={handleUp}
+              onMouseMove={handleMove}
+              onTouchStart={handleDown}
+              onTouchEnd={handleUp}
+              onTouchMove={handleMove}
+            />
+            {/* Shimmer Effect */}
+            <motion.div 
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent w-full pointer-events-none"
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ repeat: Infinity, duration: 2.5, ease: "linear" }}
+            />
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
