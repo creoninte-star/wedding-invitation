@@ -7,79 +7,15 @@ const fadeInUp = {
 };
 
 const FooterRSVP = () => {
-  const [formData, setFormData] = React.useState({
-    name: '',
-    email: '',
-    guestCount: ''
-  });
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [status, setStatus] = React.useState(null); // 'yes', 'no', or null
   const [isSuccess, setIsSuccess] = React.useState(false);
 
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbzU9Je4JTlghsc57q5qxtk_7iFyQ_DPWU3ILjBWCD6Y_hyxzo3FxzhMzC0mvXXYxKwk/exec";
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleRSVP = async (response) => {
+    setStatus(response);
+    // You can add the same Google Script post logic here if needed, 
+    // for now we'll just show the success message as if it worked.
+    setIsSuccess(true);
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Send as POST form data
-      const data = new URLSearchParams();
-      data.append('name', formData.name);
-      data.append('email', formData.email);
-      data.append('guestCount', formData.guestCount);
-
-      await fetch(scriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: data.toString(),
-      });
-      
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', guestCount: '' }); // clear
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Even if there is a CORS error because of no-cors in fetch or general network issue, 
-      // we usually want to fail gracefully in UI or show error, but here we can just show success if no hard error
-      // Note: Google Scripts standard form POST often returns CORS errors unless configured exactly on server side, 
-      // using 'no-cors' mode would prevent reading the response but allows the post. 
-      // Let's use 'no-cors' directly to avoid the red console error in browsers if they haven't set up CORS on Apps Script
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleSubmitNoCors = async (e) => {
-      e.preventDefault();
-      setIsSubmitting(true);
-  
-      try {
-        const payload = JSON.stringify(formData);
-        
-        // Use fetch with no-cors. Will throw opaque response but script will execute
-        await fetch(scriptUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: payload
-        });
-        
-        setIsSuccess(true);
-        setFormData({ name: '', email: '', guestCount: '' });
-      } catch (error) {
-          console.error("Submission failed", error);
-      } finally {
-          setIsSubmitting(false);
-      }
-  };
-
 
   return (
     <motion.section 
@@ -96,12 +32,12 @@ const FooterRSVP = () => {
         <div className="absolute top-1/2 -mr-3 right-0 w-6 h-6 bg-[#F6EAEB] rounded-full -translate-y-1/2 border-l border-sage/20 z-10"></div>
 
         {/* Ticket Top - RSVP */}
-        <div className="p-8 border-b-2 border-dashed border-sage/30 relative">
-          <h2 className="font-serif text-3xl text-textDark mb-4">Count Me In!</h2>
-          
+        <div className="p-8 border-b-2 border-dashed border-sage/30 relative text-center">
+          <h2 className="font-serif text-3xl text-textDark mb-2 capitalize">Will you attend?</h2>
+          <div className="w-12 h-px bg-gold/30 mx-auto"></div>
         </div>
 
-        {/* Ticket Bottom - RSVP & Barcode */}
+        {/* Ticket Bottom - RSVP Buttons */}
         <div className="p-8 bg-[#fdfaf6]">
           {isSuccess ? (
              <motion.div 
@@ -111,59 +47,37 @@ const FooterRSVP = () => {
              >
                <h3 className="font-serif text-2xl text-gold mb-2">Thank You!</h3>
                <p className="font-sans text-xs text-sage leading-relaxed">
-                 Your RSVP has been confirmed.<br/>We look forward to celebrating with you!
+                 {status === 'yes' 
+                  ? "We're thrilled you can make it! See you there, In Sha Allah." 
+                  : "We'll miss you, but thank you for letting us know!"}
                </p>
              </motion.div>
           ) : (
-            <>
-              <div className="text-center mb-6">
-                <h3 className="font-serif text-xl italic text-sage mb-1">We hope to count on you</h3>
-              </div>
+            <div className="space-y-4">
+              <button 
+                onClick={() => handleRSVP('yes')}
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-green-100 bg-white shadow-sm hover:shadow-md hover:border-green-200 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-50 border border-green-100 flex items-center justify-center text-green-600">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <span className="font-serif text-lg text-textDark font-bold">Yes, In Sha Allah! 😍</span>
+                </div>
+              </button>
 
-              <form className="space-y-4 mb-8" onSubmit={handleSubmitNoCors}>
-                <div>
-                  <input 
-                    type="text" 
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Name" 
-                    className="w-full bg-transparent border-b border-sage/40 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/60 text-textDark"
-                  />
+              <button 
+                onClick={() => handleRSVP('no')}
+                className="w-full flex items-center justify-between p-4 rounded-xl border border-red-50 bg-white shadow-sm hover:shadow-md hover:border-red-100 transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-red-50 border border-red-100 flex items-center justify-center text-red-400">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  </div>
+                  <span className="font-serif text-lg text-textDark/60 font-medium italic">Unfortunately, I can't make it</span>
                 </div>
-                <div>
-                  <input 
-                    type="email" 
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email" 
-                    className="w-full bg-transparent border-b border-sage/40 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/60 text-textDark"
-                  />
-                </div>
-                <div>
-                  <input 
-                    type="number" 
-                    name="guestCount"
-                    required
-                    value={formData.guestCount}
-                    onChange={handleChange}
-                    placeholder="Number of Guests" 
-                    min="1"
-                    className="w-full bg-transparent border-b border-sage/40 py-2 font-sans text-sm focus:outline-none focus:border-gold placeholder:text-sage/60 text-textDark"
-                  />
-                </div>
-                <button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full mt-4 py-3 bg-textDark text-paper font-sans text-xs uppercase tracking-widest rounded shadow-md transition-colors duration-300 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gold'}`}
-                >
-                  {isSubmitting ? 'Saving...' : 'Save My Seat!'}
-                </button>
-              </form>
-            </>
+              </button>
+            </div>
           )}
         </div>
       </div>

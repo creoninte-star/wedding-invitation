@@ -390,6 +390,9 @@ const EventSections = ({ onAllRevealed }) => {
 
   const handleReveal = () => setRevealedCount(prev => prev + 1);
 
+  const commonLocation = "https://maps.app.goo.gl/NvpiSgrVxRf71aom8?g_st=aw";
+  const commonVenue = "Malabar Marina, Cheruvannur, Calicut";
+
   return (
     <div className="pb-16 flex flex-col items-center" ref={containerRef}>
       <EventCard 
@@ -397,9 +400,9 @@ const EventSections = ({ onAllRevealed }) => {
         dateString="May 6, 2026"
         targetDateIso="2026-05-06T16:00:00"
         time="After Asar (4:00 PM onwards)"
-        highlight="Bride Entry: 5:30 PM - 6:00 PM"
-        venue="Zareena Manzil, Koothparamba"
-        locationLink="https://maps.app.goo.gl/NvpiSgrVxRf71aom8?g_st=aw"
+        highlight="Dhuʻl-Qiʻdah 19, 1447"
+        venue={commonVenue}
+        locationLink={commonLocation}
         onReveal={handleReveal}
       />
       <EventCard 
@@ -407,9 +410,9 @@ const EventSections = ({ onAllRevealed }) => {
         dateString="May 7, 2026"
         targetDateIso="2026-05-07T12:00:00"
         time="Starting at 12:00 PM"
-        highlight={null}
-        venue="Vajra Auditorium, Mooriyad Road"
-        locationLink="https://www.google.com/maps/search/Vajra+Auditorium+Mooriyad+Road+Koothuparamba"
+        highlight="Dhuʻl-Qiʻdah 20, 1447"
+        venue={commonVenue}
+        locationLink={commonLocation}
         onReveal={handleReveal}
       />
 
