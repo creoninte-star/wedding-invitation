@@ -90,7 +90,7 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/mickey%20mouse.png"
                 alt="Mickey"
-                className="absolute -top-12 -left-12 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-lg"
+                className="absolute -top-16 -left-6 w-16 sm:w-24 z-50 pointer-events-none mix-blend-multiply"
                 initial={{ opacity: 0, scale: 0.8, rotate: -20 }}
                 animate={{ 
                   opacity: 1, 
@@ -109,7 +109,7 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/jerry.png"
                 alt="Jerry"
-                className="absolute -bottom-8 -right-8 w-14 sm:w-20 z-50 pointer-events-none drop-shadow-lg"
+                className="absolute -bottom-8 -right-4 w-12 sm:w-16 z-50 pointer-events-none mix-blend-multiply"
                 initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
                 animate={{ 
                   opacity: 1, 
@@ -128,7 +128,7 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/tom.png"
                 alt="Tom"
-                className="absolute -bottom-16 -left-12 w-24 sm:w-32 z-50 pointer-events-none drop-shadow-lg"
+                className="absolute -bottom-12 -left-4 w-20 sm:w-28 z-50 pointer-events-none mix-blend-multiply"
                 initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
                 animate={{ 
                   opacity: 1, 
