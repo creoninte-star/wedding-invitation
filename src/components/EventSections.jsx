@@ -378,6 +378,42 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
   );
 };
 
+const CountdownDisplay = ({ targetDateIso, revealed }) => {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(targetDateIso) - +new Date();
+    if (difference <= 0) return { days: '00', hours: '00', minutes: '00', seconds: '00' };
+
+    return {
+      days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
+      hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
+      minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
+      seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [targetDateIso]);
+
+  return (
+    <div className="flex justify-center gap-3 my-4">
+      {['days', 'hours', 'minutes', 'seconds'].map((interval) => (
+        <div key={interval} className="flex flex-col items-center">
+          <DigitCounter value={timeLeft[interval]} revealed={revealed} />
+          <span className="font-sans text-[7px] uppercase tracking-[0.2em] text-textDark/50">
+            {interval}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const EventSections = ({ onAllRevealed }) => {
   const [revealed, setRevealed] = useState(false);
   const containerRef = useRef(null);
@@ -407,31 +443,33 @@ const EventSections = ({ onAllRevealed }) => {
             onReveal={handleReveal} 
           />
           
-          <div className="space-y-8 mt-8 text-center">
+          <div className="space-y-6 mt-8 text-center overflow-hidden">
             {/* Nikkah Info */}
-            <div className={`transition-opacity duration-1000 ${revealed ? 'opacity-100' : 'opacity-20'}`}>
-              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Nikkah Ceremony</h3>
+            <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Nikkah Ceremony</h3>
               <p className="font-serif text-lg text-textDark font-bold">Wednesday, May 6</p>
+              <CountdownDisplay targetDateIso="2026-05-06T16:00:00" revealed={revealed} />
               <p className="font-serif text-sm text-textDark/80">After Asar (4:00 PM onwards)</p>
               <p className="font-serif text-xs italic text-gold mt-1">Dhuʻl-Qiʻdah 19, 1447</p>
             </div>
 
-            <div className="w-8 h-px bg-gold/20 mx-auto"></div>
+            <div className="w-16 h-px bg-gold/20 mx-auto my-4"></div>
 
             {/* Marriage Info */}
-            <div className={`transition-opacity duration-1000 ${revealed ? 'opacity-100' : 'opacity-20'}`}>
-              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Marriage Function</h3>
+            <div className={`transition-all duration-1000 ${revealed ? 'opacity-100 scale-100' : 'opacity-20 scale-95 blur-sm'}`}>
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Marriage Function</h3>
               <p className="font-serif text-lg text-textDark font-bold">Thursday, May 7</p>
+              <CountdownDisplay targetDateIso="2026-05-07T12:00:00" revealed={revealed} />
               <p className="font-serif text-sm text-textDark/80">Starting at 12:00 PM</p>
               <p className="font-serif text-xs italic text-gold mt-1">Dhuʻl-Qiʻdah 20, 1447</p>
             </div>
 
-            <div className="pt-4">
-              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
-              <p className="font-serif text-base text-textDark font-bold">{commonVenue}</p>
+            <div className="pt-6 border-t border-gold/10">
+              <h3 className="font-sans text-[9px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
+              <p className="font-serif text-base text-textDark font-bold leading-tight">{commonVenue}</p>
             </div>
 
-            <motion.div className="pt-4">
+            <motion.div className="pt-6">
               <a 
                 href={commonLocation}
                 target="_blank"

@@ -74,11 +74,11 @@ const OrnateSingleCard = ({ pathDraw }) => (
       <div className="flex items-center justify-center gap-4 w-full px-2 mb-6">
         <div className="flex-1 text-center">
           <h2 className="font-serif text-2xl sm:text-3xl text-textDark italic leading-tight">
-            Suhail Saleem
+            Rafeel
           </h2>
           <span className="text-gold font-serif italic text-lg">&</span>
           <h2 className="font-serif text-2xl sm:text-3xl text-textDark italic leading-tight">
-            Atiya
+            Jumana
           </h2>
         </div>
         
@@ -88,11 +88,11 @@ const OrnateSingleCard = ({ pathDraw }) => (
 
         <div className="flex-1 text-center">
           <h2 className="font-serif text-2xl sm:text-3xl text-textDark italic leading-tight">
-            Sahal Saleem
+            Rizwan
           </h2>
           <span className="text-gold font-serif italic text-lg">&</span>
           <h2 className="font-serif text-2xl sm:text-3xl text-textDark italic leading-tight">
-            Rinsha Fathima
+            Nidha
           </h2>
         </div>
       </div>
