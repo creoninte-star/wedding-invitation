@@ -89,13 +89,13 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/jerry.png"
                 alt="Jerry"
-                className="absolute top-[25%] -left-6 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
-                initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -15 }}
+                className="absolute top-[35%] -left-8 w-20 sm:w-28 z-50 pointer-events-none drop-shadow-xl"
+                initial={{ opacity: 0, scaleX: -0.8, scaleY: 0.8, rotate: -10 }}
                 animate={{ 
                   opacity: 1, 
                   scaleX: -1, 
                   scaleY: 1,
-                  rotate: -20,
+                  rotate: -15,
                   y: [0, -15, 0]
                 }}
                 exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
@@ -109,12 +109,12 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/tom.png"
                 alt="Tom"
-                className="absolute top-[35%] -right-10 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
+                className="absolute top-[45%] -right-8 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
                 initial={{ opacity: 0, scale: 0.8, rotate: 10 }}
                 animate={{ 
                   opacity: 1, 
                   scale: 1, 
-                  rotate: -10,
+                  rotate: -5,
                   y: [0, -15, 0]
                 }}
                 exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
@@ -128,7 +128,7 @@ const HeroEnvelope = ({ onOpen }) => {
               <motion.img 
                 src="/mickey%20mouse.png"
                 alt="Mickey"
-                className="absolute -bottom-24 left-1/2 -ml-14 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
+                className="absolute -bottom-14 left-1/2 -ml-6 w-28 sm:w-40 z-50 pointer-events-none drop-shadow-xl"
                 initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                 animate={{ 
                   opacity: 1, 
