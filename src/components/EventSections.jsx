@@ -422,14 +422,15 @@ const EventSections = ({ onAllRevealed }) => {
   const [revealed, setRevealed] = useState(false);
   const containerRef = useRef(null);
   const cardRef = useRef(null);
+  const innerCardRef = useRef(null);
   const [hasScrolledPast, setHasScrolledPast] = useState(false);
 
   useEffect(() => {
     if (revealed) {
       if (onAllRevealed) onAllRevealed();
-      // Scroll to center on reveal
+      // Scroll to center on reveal with a more precise target
       setTimeout(() => {
-        cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 500);
     }
   }, [revealed, onAllRevealed]);
@@ -442,33 +443,26 @@ const EventSections = ({ onAllRevealed }) => {
     let isMovingValue = false;
 
     const handleScroll = () => {
-      if (!cardRef.current || revealed || isMovingValue) return;
+      if (!innerCardRef.current || revealed || isMovingValue) return;
 
-      const rect = cardRef.current.getBoundingClientRect();
+      const rect = innerCardRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const currentScrollY = window.scrollY;
       
-      // If we are scrolling DOWN and the card is leaving the top of the viewport
-      // OR if we are scrolling UP and the card is leaving the bottom
-      const isScrolledPastBottom = rect.bottom < viewportHeight * 0.35;
+      const isScrolledPast = rect.bottom < viewportHeight * 0.4;
       
-      if (isScrolledPastBottom && !hasScrolledPast && currentScrollY > lastScrollY) {
+      if (isScrolledPast && !hasScrolledPast && currentScrollY > lastScrollY) {
         setHasScrolledPast(true);
         isMovingValue = true;
 
-        // Smooth Physics-based scroll back to center
-        const targetScroll = cardRef.current.offsetTop - (viewportHeight / 2) + (rect.height / 2);
-        
-        window.scrollTo({
-          top: targetScroll,
-          behavior: 'smooth'
-        });
-
-        // Reset state after transition
+        // More organic snap back to center the actual card
         setTimeout(() => {
-          setHasScrolledPast(false);
+          if (!revealed) {
+            innerCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          setHasScrolledPast(false); 
           isMovingValue = false;
-        }, 800);
+        }, 100);
       }
       
       lastScrollY = currentScrollY;
@@ -493,7 +487,10 @@ const EventSections = ({ onAllRevealed }) => {
         viewport={{ once: false, margin: "-100px" }}
         transition={{ type: "spring", stiffness: 50 }}
       >
-        <div className="border border-gold/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative">
+        <div 
+          ref={innerCardRef}
+          className="border border-gold/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative"
+        >
           <h2 className="font-serif text-3xl text-textDark mb-1 italic">Wedding Ceremonies</h2>
           <div className="w-12 h-px bg-gold/40 mx-auto mb-4" />
           
