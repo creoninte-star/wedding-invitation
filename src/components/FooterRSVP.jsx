@@ -33,7 +33,7 @@ const FooterRSVP = () => {
 
         {/* Ticket Top - RSVP */}
         <div className="p-8 border-b-2 border-dashed border-sage/30 relative text-center">
-          <h2 className="font-serif text-3xl text-textDark mb-2 capitalize">Will you attend?</h2>
+          <h2 className="font-serif text-3xl text-textDark mb-2 capitalize">Yes, In Sha Allah!</h2>
           <div className="w-12 h-px bg-gold/30 mx-auto"></div>
         </div>
 

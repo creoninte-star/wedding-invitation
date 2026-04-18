@@ -379,57 +379,72 @@ const EventCard = ({ title, dateString, targetDateIso, time, highlight, venue, l
 };
 
 const EventSections = ({ onAllRevealed }) => {
-  const [revealedCount, setRevealedCount] = useState(0);
+  const [revealed, setRevealed] = useState(false);
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    if (revealedCount >= 2 && onAllRevealed) {
-      onAllRevealed();
-    }
-  }, [revealedCount, onAllRevealed]);
-
-  const handleReveal = () => setRevealedCount(prev => prev + 1);
+  const handleReveal = () => {
+    setRevealed(true);
+    if (onAllRevealed) onAllRevealed();
+  };
 
   const commonLocation = "https://maps.app.goo.gl/NvpiSgrVxRf71aom8?g_st=aw";
-  const commonVenue = "Malabar Marina, Cheruvannur, Calicut";
+  const commonVenue = "Zareena Manzil, Koothuparamba";
 
   return (
     <div className="pb-16 flex flex-col items-center" ref={containerRef}>
-      <EventCard 
-        title="Nikkah Ceremony"
-        dateString="May 6, 2026"
-        targetDateIso="2026-05-06T16:00:00"
-        time="After Asar (4:00 PM onwards)"
-        highlight="Dhuʻl-Qiʻdah 19, 1447"
-        venue={commonVenue}
-        locationLink={commonLocation}
-        onReveal={handleReveal}
-      />
-      <EventCard 
-        title="Marriage Function"
-        dateString="May 7, 2026"
-        targetDateIso="2026-05-07T12:00:00"
-        time="Starting at 12:00 PM"
-        highlight="Dhuʻl-Qiʻdah 20, 1447"
-        venue={commonVenue}
-        locationLink={commonLocation}
-        onReveal={handleReveal}
-      />
+      <motion.section 
+        className="min-h-[85vh] flex flex-col items-center justify-center py-10 px-6 text-center relative z-10 w-full"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false, margin: "-100px" }}
+      >
+        <div className="border border-gold/30 rounded-t-[160px] rounded-b-xl p-8 bg-paper shadow-2xl embossed w-full max-w-sm relative">
+          <h2 className="font-serif text-3xl text-textDark mb-1 italic">Wedding Ceremonies</h2>
+          <div className="w-12 h-px bg-gold/40 mx-auto mb-4" />
+          
+          <ScratchCardDate 
+            dateString="May 6 & 7, 2026" 
+            onReveal={handleReveal} 
+          />
+          
+          <div className="space-y-8 mt-8 text-center">
+            {/* Nikkah Info */}
+            <div className={`transition-opacity duration-1000 ${revealed ? 'opacity-100' : 'opacity-20'}`}>
+              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Nikkah Ceremony</h3>
+              <p className="font-serif text-lg text-textDark font-bold">Wednesday, May 6</p>
+              <p className="font-serif text-sm text-textDark/80">After Asar (4:00 PM onwards)</p>
+              <p className="font-serif text-xs italic text-gold mt-1">Dhuʻl-Qiʻdah 19, 1447</p>
+            </div>
 
-      <AnimatePresence>
-        {revealedCount < 2 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.6 }}
-            exit={{ opacity: 0 }}
-            className="text-center pt-8"
-          >
-            <p className="font-sans text-[9px] uppercase tracking-[0.2em] text-gold animate-pulse">
-              Scratch both dates to unlock details
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="w-8 h-px bg-gold/20 mx-auto"></div>
+
+            {/* Marriage Info */}
+            <div className={`transition-opacity duration-1000 ${revealed ? 'opacity-100' : 'opacity-20'}`}>
+              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Marriage Function</h3>
+              <p className="font-serif text-lg text-textDark font-bold">Thursday, May 7</p>
+              <p className="font-serif text-sm text-textDark/80">Starting at 12:00 PM</p>
+              <p className="font-serif text-xs italic text-gold mt-1">Dhuʻl-Qiʻdah 20, 1447</p>
+            </div>
+
+            <div className="pt-4">
+              <h3 className="font-sans text-[10px] uppercase tracking-widest text-[#899E8F] mb-1 font-bold">Venue</h3>
+              <p className="font-serif text-base text-textDark font-bold">{commonVenue}</p>
+            </div>
+
+            <motion.div className="pt-4">
+              <a 
+                href={commonLocation}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-3 rounded-full border-2 border-gold/40 bg-white shadow-lg text-gold font-serif text-[13px] tracking-widest hover:bg-gold hover:text-white transition-all duration-500 uppercase italic font-bold"
+              >
+                <Map size={16} />
+                View Location
+              </a>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 };

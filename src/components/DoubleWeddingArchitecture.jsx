@@ -116,13 +116,11 @@ const OrnateSingleCard = ({ pathDraw }) => (
       <p className="font-serif text-[13px] text-sage italic mb-6 tracking-wide underline underline-offset-4 decoration-gold/30">Dhuʻl-Qiʻdah 19, 1447</p>
 
       <div className="space-y-1 mb-8">
-        <h3 className="font-serif text-xl tracking-[0.1em] text-textDark uppercase font-bold">Malabar Marina</h3>
-        <p className="font-serif text-sm text-sage italic">Cheruvannur, Calicut</p>
+        <h3 className="font-serif text-xl tracking-[0.1em] text-textDark uppercase font-bold">Zareena Manzil</h3>
+        <p className="font-serif text-sm text-sage italic">Koothuparamba</p>
       </div>
 
-      <div className="w-12 h-px bg-gold/30 mx-auto mb-6"></div>
-
-      <RSVPButtonsShorthand />
+      <div className="w-12 h-px bg-gold/30 mx-auto"></div>
     </div>
   </div>
 );
