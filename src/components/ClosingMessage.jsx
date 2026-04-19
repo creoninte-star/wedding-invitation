@@ -36,7 +36,7 @@ const ClosingMessage = () => {
 
         {/* Invitation Message */}
         <p className="font-sans text-[10px] sm:text-[11px] leading-loose tracking-[0.15em] uppercase text-textDark/80 mb-6 max-w-[320px]">
-          InshaAllah, your esteemed presence and heartfelt prayers are the most beautiful gifts we could ask for on this blessed occasion. 
+          In Sha Allah, your esteemed presence and heartfelt prayers are the most beautiful gifts we could ask for on this blessed occasion. 
           <br/><br/>
           We, along with our families, warmly invite you to share our joy.
         </p>

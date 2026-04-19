@@ -131,7 +131,7 @@ const FooterRSVP = () => {
                   <div className="w-10 h-10 rounded-full bg-green-50 border border-green-200 flex items-center justify-center text-green-600">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
-                  <span className="font-serif text-lg text-textDark font-bold">Yes, InshaAllah! 😍</span>
+                  <span className="font-serif text-lg text-textDark font-bold">Yes, In Sha Allah! 😍</span>
                 </div>
               </button>
 

@@ -43,7 +43,7 @@ const RSVPButtonsShorthand = () => (
          <div className="w-6 h-6 rounded-full bg-green-50 border border-green-200 flex items-center justify-center text-green-600">
            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
          </div>
-         <span className="font-serif text-[11px] text-textDark font-bold">Yes, InshaAllah! 😍</span>
+         <span className="font-serif text-[11px] text-textDark font-bold">Yes, In Sha Allah! 😍</span>
       </button>
       <button className="flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-lg border border-sage/20 bg-white/50 backdrop-blur-sm shadow-sm hover:bg-red-50 transition-all group">
          <div className="w-6 h-6 rounded-full bg-red-50 border border-red-200 flex items-center justify-center text-red-400">
