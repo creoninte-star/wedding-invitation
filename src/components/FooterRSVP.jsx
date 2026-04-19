@@ -40,7 +40,7 @@ const FooterRSVP = () => {
 
     setIsSubmitting(true);
     
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbza6jj4abW2GUUeZz0BX65skESKgFaNo_eTP-ON53neYu8afuUUenkL5pPPty32UW1i/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwIDRFvvRFoBg5ODk5TCobbTLoFYajioHG3M_VusK9hUAuA8cHM0hdrZ-QIHzFjgicBPA/exec";
 
     try {
       // Create the payload using the requested JSON keys
