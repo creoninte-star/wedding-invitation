@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -25,8 +26,27 @@ const FooterRSVP = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate API call
-    setTimeout(() => {
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbyN_P9mS4iVa4ej3HqCUYEPkpT3qxXTkW5tyXBDpLcDSEhnACtjGrNonT2zB-dwG_IZ/exec";
+
+    try {
+      // Create the payload exactly as requested
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        guestCount: formData.guestCount
+      };
+
+      // Sending data to Google Sheets via Apps Script
+      await fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors', // Essential for Google Apps Script to avoid CORS issues
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      // Show success state and perform animations
       setIsSuccess(true);
       setIsSubmitting(false);
       
@@ -61,7 +81,12 @@ const FooterRSVP = () => {
         origin: { y: 0.6 },
         colors: ['#D4AF37', '#F1E1A6', '#B68222']
       });
-    }, 1500);
+    } catch (error) {
+      console.error("Submission error:", error);
+      // Even if there's an error, we can show a fallback or notify the user
+      setIsSubmitting(false);
+      alert("Submission failed. Please try again or contact the host.");
+    }
   };
 
   const handleNoResponse = () => {
