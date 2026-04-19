@@ -69,15 +69,18 @@ const OrnateSingleCard = ({ pathDraw }) => (
     </svg>
 
     <div className="mt-8 z-20 w-full flex flex-col items-center px-4 text-center">
-      {/* Original Bismillah Design */}
+      {/* Original Bismillah Design with English Translation */}
       <motion.div 
         className="mb-8"
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.5 }}
       >
-        <span className="font-serif text-5xl text-gold italic drop-shadow-sm">﷽</span>
-        <div className="w-16 h-px bg-gold/30 mx-auto mt-2"></div>
+        <span className="font-serif text-4xl text-gold italic drop-shadow-sm block mb-2">﷽</span>
+        <p className="font-serif text-[18px] sm:text-[20px] font-bold tracking-[0.05em] text-[#9A6D1C] italic leading-tight px-4">
+          In the Name of Allah,<br /> the Most Gracious, the Most Merciful
+        </p>
+        <div className="w-16 h-px bg-gold/30 mx-auto mt-4"></div>
       </motion.div>
 
       {/* Main Couple Names */}
