@@ -112,7 +112,7 @@ const FooterRSVP = () => {
 
         <div className="p-8 border-b-2 border-dashed border-gold/30 relative text-center">
           <h2 className="font-serif text-3xl text-textDark mb-1 capitalize">Will you attend?</h2>
-          <p className="font-sans text-[10px] italic text-gold/80 mb-3">*If yes a surprise is waiting for you</p>
+          <p className="font-sans text-[10px] italic text-gold/80 mb-3">If yes a surprise is waiting for you</p>
           <div className="w-12 h-px bg-gold/30 mx-auto"></div>
         </div>
 
