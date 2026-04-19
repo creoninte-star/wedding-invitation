@@ -517,7 +517,6 @@ const EventSections = ({ onAllRevealed }) => {
               
               <div className="flex flex-col items-center gap-1 mt-2 mb-4">
                 <p className="font-serif text-sm text-textDark/80">Starting at 11:00 AM</p>
-                <p className="font-sans text-[10px] text-gold font-bold uppercase tracking-[0.2em] underline decoration-gold/30 underline-offset-4">After Asar</p>
               </div>
 
               <CountdownDisplay targetDateIso="2026-05-07T11:00:00" revealed={revealed} />
