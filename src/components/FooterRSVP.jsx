@@ -25,6 +25,13 @@ const FooterRSVP = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Custom Validation: Either Email or Contact Info must be provided
+    if (!formData.email && !formData.contactInfo) {
+      alert("Please provide either an Email Address or your Insta ID/Mobile Number so we can reach you!");
+      return;
+    }
+
     setIsSubmitting(true);
     
     const scriptUrl = "https://script.google.com/macros/s/AKfycbyN_P9mS4iVa4ej3HqCUYEPkpT3qxXTkW5tyXBDpLcDSEhnACtjGrNonT2zB-dwG_IZ/exec";
@@ -193,7 +200,6 @@ const FooterRSVP = () => {
                 <input 
                   type="email" 
                   name="email"
-                  required
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email Address" 
@@ -202,7 +208,6 @@ const FooterRSVP = () => {
                 <input 
                   type="text" 
                   name="contactInfo"
-                  required
                   value={formData.contactInfo}
                   onChange={handleChange}
                   placeholder="Insta ID or Mobile Number" 
