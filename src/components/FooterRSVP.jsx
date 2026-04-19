@@ -26,6 +26,12 @@ const FooterRSVP = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check for existing submission
+    if (localStorage.getItem('hasEnteredLuckyDraw')) {
+      alert("You have already submitted your entry for the Lucky Draw. Thank you!");
+      return;
+    }
+
     // Custom Validation: Either Email or Contact Info must be provided
     if (!formData.email && !formData.contactInfo) {
       alert("Please provide either an Email Address or your Insta ID/Mobile Number so we can reach you!");
@@ -54,6 +60,9 @@ const FooterRSVP = () => {
         },
         body: JSON.stringify(payload),
       });
+
+      // Mark as submitted locally to prevent duplicates
+      localStorage.setItem('hasEnteredLuckyDraw', 'true');
 
       // Show success state and perform animations
       setIsSuccess(true);
