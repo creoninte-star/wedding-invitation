@@ -34,15 +34,15 @@ const FooterRSVP = () => {
 
     setIsSubmitting(true);
     
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbyN_P9mS4iVa4ej3HqCUYEPkpT3qxXTkW5tyXBDpLcDSEhnACtjGrNonT2zB-dwG_IZ/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbza6jj4abW2GUUeZz0BX65skESKgFaNo_eTP-ON53neYu8afuUUenkL5pPPty32UW1i/exec";
 
     try {
-      // Create the payload exactly as requested
+      // Create the payload using the requested JSON keys
       const payload = {
-        name: formData.name,
-        email: formData.email,
-        contactInfo: formData.contactInfo,
-        guestCount: formData.guestCount
+        fullName: formData.name,
+        emailAddress: formData.email,
+        contactId: formData.contactInfo,
+        guestNumbers: formData.guestCount
       };
 
       // Sending data to Google Sheets via Apps Script
